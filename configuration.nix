@@ -22,13 +22,14 @@ in nixos {
 	      ];
 
 	   home-manager.useGlobalPkgs = true;
-	   home-manager.users.toniogela = { pkgs, ... }: {
+	   home-manager.users.toniogela = { pkgs, config, ... }: {
 	     home.packages = [ ];
 	     home.enableNixpkgsReleaseCheck = true;
 	     home.file = {
 		".config/niri/config.kdl".source = ./dotfiles/niri.kdl;
 		".config/wallpaper.svg".source = ./dotfiles/wallpaper.svg;
 		".config/kitty/kitty.conf".source = ./dotfiles/kitty.conf;
+		"notes.md".source = config.lib.file.mkOutOfStoreSymlink ./dotfiles/notes.md;
 	     };
 	     programs.home-manager.enable = true;
 	     home.stateVersion = "25.11";
