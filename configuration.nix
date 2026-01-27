@@ -21,6 +21,11 @@ in nixos {
 		homeManager
 	      ];
 
+	   services.udev.packages = [ pkgs.game-devices-udev-rules ];
+	   services.udev.extraRules = ''
+  	     KERNEL=="event*", SUBSYSTEM=="input", MODE="0660", GROUP="input"
+  	   '';
+
 	   home-manager.useGlobalPkgs = true;
 	   home-manager.users.toniogela = { pkgs, config, ... }: {
 	     home.packages = [ ];
@@ -148,7 +153,7 @@ in nixos {
 	  
 	    users.users.toniogela = {
 	      isNormalUser = true;
-	      extraGroups = [ "wheel" "gamemode" "lpadmin"];
+	      extraGroups = [ "wheel" "gamemode" "lpadmin" "input" ];
 	    };
 	  
 	    programs.niri.enable = true;
