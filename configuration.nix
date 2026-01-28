@@ -3,15 +3,13 @@ let
   pkgs = import sources.nixpkgs {
     config.allowUnfree = true;
   };
+  pkgsUnstable = import sources.nixpkgs-unstable {
+    config.allowUnfree = true;
+  };
   nixos = import (sources.nixpkgs + "/nixos");
   fw13-hardware = import (sources.nixos-hardware + "/framework/13-inch/amd-ai-300-series");
   homeManager = import (sources.home-manager + "/nixos" );
-  mkHome = mod:
-    homeManager {
-      configuration.imports = [ mod ];
-      inherit pkgs;
-      extraSpecialArgs = { }; # In case you need to pass further args to hm modules
-    };
+  diskoModule = sources.disko + "/module.nix";
 in nixos {
 	  configuration = { pkgs, ...} : {
 	    imports =
@@ -19,6 +17,7 @@ in nixos {
 		fw13-hardware
 		./hardware-configuration.nix
 		homeManager
+	        diskoModule
 	      ];
 
 	   services.udev.packages = [ pkgs.game-devices-udev-rules ];
@@ -26,8 +25,12 @@ in nixos {
   	     KERNEL=="event*", SUBSYSTEM=="input", MODE="0660", GROUP="input"
   	   '';
 
-	   home-manager.useGlobalPkgs = true;
+	   home-manager.useGlobalPkgs = true; 
+	   home-manager.useUserPackages = true; 
+	   # You should fix the modules to be as shallow as possible and to install packages in global packages (the reason some stuff is installed but not available is this one)
 	   home-manager.users.toniogela = { pkgs, config, ... }: {
+	     imports = [ ./firefox ./zsh ./neovim ];
+	     _module.args = { inherit pkgsUnstable; };
 	     home.packages = [ ];
 	     home.enableNixpkgsReleaseCheck = true;
 	     home.file = {
@@ -150,6 +153,10 @@ in nixos {
 		"alsa.use-ucm" = false;
 	      };
 	    };
+
+	    users.defaultUserShell = pkgs.zsh;
+	    programs.zsh.enable = true;
+	    programs.zoxide.enable = true;
 	  
 	    users.users.toniogela = {
 	      isNormalUser = true;
@@ -158,7 +165,7 @@ in nixos {
 	  
 	    programs.niri.enable = true;
 	    programs.waybar.enable = false;
-	    programs.firefox.enable = true;
+	    programs.firefox.enable = false;
 
 	    nixpkgs.config.allowUnfree = true;
 	    programs.steam.enable = true;
