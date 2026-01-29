@@ -29,7 +29,7 @@ in nixos {
 	   home-manager.useUserPackages = true; 
 	   # You should fix the modules to be as shallow as possible and to install packages in global packages (the reason some stuff is installed but not available is this one)
 	   home-manager.users.toniogela = { pkgs, config, ... }: {
-	     imports = [ ./firefox ./zsh ./neovim ];
+	     imports = [ ./firefox ./zsh ./neovim ./vscodium ];
 	     _module.args = { inherit pkgsUnstable; };
 	     home.packages = [ ];
 	     home.enableNixpkgsReleaseCheck = true;
@@ -52,6 +52,7 @@ in nixos {
 	    environment = {
 	      etc."nixos/nixpkgs".source = builtins.storePath pkgs.path;
 	      variables."NH_FILE" = "/etc/nixos/configuration.nix";
+	      sessionVariables.NIXOS_OZONE_WL = "1";
 	      shellAliases = {
 		ls = "${pkgs.eza}/bin/eza -la --icons --git --group-directories-first --color=auto --git-ignore";
 	      };
@@ -166,6 +167,8 @@ in nixos {
 	    programs.niri.enable = true;
 	    programs.waybar.enable = false;
 	    programs.firefox.enable = false;
+
+			programs.nix-ld.enable = true;
 
 	    nixpkgs.config.allowUnfree = true;
 	    programs.steam.enable = true;

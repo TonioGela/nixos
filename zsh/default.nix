@@ -102,8 +102,8 @@ let
     }
 
     function codium-patch() {
-      sudo chown -R $(whoami) ${pkgs.vscodium.outPath}/Applications/VSCodium.app/Contents/Resources/app
-      sudo chmod -R u+w ${pkgs.vscodium.outPath}/Applications/VSCodium.app/Contents/Resources/app
+      sudo chown -R $(whoami) ${pkgs.vscodium.outPath}
+      sudo chmod -R u+w ${pkgs.vscodium.outPath}
     }
   '';
 in
