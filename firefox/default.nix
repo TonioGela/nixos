@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   ...
 }:
 {
@@ -93,7 +92,7 @@
             };
           };
         in
-        listToAttrs ([
+        listToAttrs [
           (extension "ublock-origin" "uBlock0@raymondhill.net")
           (extension "new-tab-override" "newtaboverride@agenedia.com")
           (extension "sponsorblock" "sponsorBlocker@ajay.app")
@@ -108,7 +107,7 @@
           (extension "clearurls" "{74145f27-f039-47ce-a470-a662b129930a}")
           (extension "vimium-ff" "{d7742d87-e61d-4b78-b8a1-b469842139fa}")
           (extension "my-online-learning-downloader" "{1b6043a9-46df-4352-adf6-553ce26b9106}")
-        ]);
+        ];
 
       # To add additional extensions, find it on addons.mozilla.org, find
       # the short ID in the url (like https://addons.mozilla.org/en-US/firefox/addon/!SHORT_ID!/)

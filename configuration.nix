@@ -63,7 +63,6 @@ nixos {
     environment = {
       etc."nixos/nixpkgs".source = builtins.storePath pkgs.path;
       variables."NH_FILE" = "/etc/nixos/configuration.nix";
-      sessionVariables.NIXOS_OZONE_WL = "1";
       shellAliases = {
         ls = "${pkgs.eza}/bin/eza -la --icons --git --group-directories-first --color=auto --git-ignore";
       };
@@ -222,6 +221,7 @@ nixos {
       fuzzel
       yazi
       gh
+      ripgrep
       xwayland-satellite
       (retroarch.withCores (
         cores: with cores; [

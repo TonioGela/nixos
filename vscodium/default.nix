@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   config,
   pkgsUnstable,
   ...
@@ -33,12 +32,6 @@ let
       publisher = "devine-davies";
       version = "4.0.4";
       sha256 = "sha256-wKeP8Ng2GLgcVZptFmvDAil51pQ3wtRHUNt2rd51vYA=";
-    }
-    {
-      name = "custom-ui-style";
-      publisher = "subframe7536";
-      version = "0.6.5";
-      sha256 = "sha256-VDR3Rkft6Am/YC68yjIjGXMZ3jKFwypFhiP4vWcC0qY=";
     }
   ];
 in

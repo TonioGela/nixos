@@ -2,15 +2,6 @@
     "breadcrumbs.enabled": false,
     "breadcrumbs.filePath": "off",
     "breadcrumbs.icons": false,
-    "custom-ui-style.electron": {
-        "frame": false
-    },
-    "custom-ui-style.external.imports": [
-        "file:///home/toniogela/.config/nixos/vscodium/vscodium.js",
-        "file:///home/toniogela/.config/nixos/vscodium/vscodium.css"
-    ],
-    "custom-ui-style.preferRestart": true,
-    "custom-ui-style.reloadWithoutPrompting": true,
     "debug.console.fontFamily": "'SauceCodePro Nerd Font Mono', monospace",
     "debug.console.fontSize": 13,
     "debug.internalConsoleOptions": "openOnSessionStart",
