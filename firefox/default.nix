@@ -93,24 +93,22 @@
             };
           };
         in
-        listToAttrs (
-            [
-              (extension "ublock-origin" "uBlock0@raymondhill.net")
-              (extension "new-tab-override" "newtaboverride@agenedia.com")
-              (extension "sponsorblock" "sponsorBlocker@ajay.app")
-              (extension "bitwarden-password-manager" "{446900e4-71c2-419f-a6a7-df9c091e268b}")
-              (extension "single-file" "{531906d3-e22f-4a6c-a102-8057b88a1a63}")
-              (extension "istilldontcareaboutcookies" "idcac-pub@guus.ninja")
-              (extension "decentraleyes" "jid1-BoFifL9Vbdl2zQ@jetpack")
-              (extension "watchmarker-for-youtube" "yourect@coderect.com")
-              (extension "duckduckgo-for-firefox" "jid1-ZAdIEUB7XOzOJw@jetpack")
-              (extension "netflix-prime-auto-skip" "NetflixPrime@Autoskip.io")
-              (extension "nord-firefox" "{f4c9e1d6-6630-4600-ad50-d223eab7f3e7}")
-              (extension "clearurls" "{74145f27-f039-47ce-a470-a662b129930a}")
-	      (extension "vimium-ff" "{d7742d87-e61d-4b78-b8a1-b469842139fa}")
-              (extension "my-online-learning-downloader" "{1b6043a9-46df-4352-adf6-553ce26b9106}")
-	    ]
-        );
+        listToAttrs ([
+          (extension "ublock-origin" "uBlock0@raymondhill.net")
+          (extension "new-tab-override" "newtaboverride@agenedia.com")
+          (extension "sponsorblock" "sponsorBlocker@ajay.app")
+          (extension "bitwarden-password-manager" "{446900e4-71c2-419f-a6a7-df9c091e268b}")
+          (extension "single-file" "{531906d3-e22f-4a6c-a102-8057b88a1a63}")
+          (extension "istilldontcareaboutcookies" "idcac-pub@guus.ninja")
+          (extension "decentraleyes" "jid1-BoFifL9Vbdl2zQ@jetpack")
+          (extension "watchmarker-for-youtube" "yourect@coderect.com")
+          (extension "duckduckgo-for-firefox" "jid1-ZAdIEUB7XOzOJw@jetpack")
+          (extension "netflix-prime-auto-skip" "NetflixPrime@Autoskip.io")
+          (extension "nord-firefox" "{f4c9e1d6-6630-4600-ad50-d223eab7f3e7}")
+          (extension "clearurls" "{74145f27-f039-47ce-a470-a662b129930a}")
+          (extension "vimium-ff" "{d7742d87-e61d-4b78-b8a1-b469842139fa}")
+          (extension "my-online-learning-downloader" "{1b6043a9-46df-4352-adf6-553ce26b9106}")
+        ]);
 
       # To add additional extensions, find it on addons.mozilla.org, find
       # the short ID in the url (like https://addons.mozilla.org/en-US/firefox/addon/!SHORT_ID!/)
@@ -208,7 +206,7 @@
         "browser.discovery.enabled" = false;
         "browser.helperApps.deleteTempFileOnExit" = true;
         "browser.uitour.enabled" = false;
-	"layout.testing.scrollbars.always-hidden" = true;
+        "layout.testing.scrollbars.always-hidden" = true;
         "extensions.getAddons.showPane" = false;
         "extensions.htmlaboutaddons.recommendations.enabled" = false;
         "network.connectivity-service.enabled" = false;
@@ -248,14 +246,14 @@
             widget-overflow-fixed-list = [ ];
             unified-extensions-area = [ ];
             nav-bar = [
-	      "back-button"
-	      "forward-button"
+              "back-button"
+              "forward-button"
               "urlbar-container"
               "downloads-button"
               "fxa-toolbar-menu-button"
               "unified-extensions-button"
             ];
-	    toolbar-menubar = [ "menubar-items" ];
+            toolbar-menubar = [ "menubar-items" ];
             TabsToolbar = [ ];
             vertical-tabs = [ ];
             PersonalToolbar = [ ];
@@ -265,74 +263,73 @@
           currentVersion = 23;
           newElementCount = 4;
         };
-       };
+      };
       # TODO https://github.com/akkva/gwfox
       userChrome = ''
-        #fullscreen-warning,
-        .titlebar-buttonbox-container,
-        #statuspanel,
-        #vertical-spacer,
-        #context-back,
-        #context-forward,
-        #context-reload,
-        #context-stop,
-        #context-sendimage,
-        #context-setDesktopBackground,
-        #context-bookmarkpage,
-        #context-savepage,
-        #context-selectall,
-        #context-viewsource,
-        #context-inspect-a11y,
-        #context-inspect,
-        #context-media-eme-separator,
-        #context-sep-navigation,
-        #context-sep-viewsource-commands,
-        #context-sep-open,
-        #context-sep-sendlinktodevice,
-        #context-sep-copylink,
-        #context-sep-setbackground,
-        #context-sep-sharing,
-        #context-sep-highlights,
-        #context-sep-redo,
-        #context-sep-selectall,
-        #context-sep-pdfjs-redo,
-        #context-sep-pdfjs-selectall,
-        #context-sep-screenshots,
-        #context-sep-frame-screenshot,
-        #context-sep-bidi,
-        #context-media-sep-video-commands,
-        #context-media-sep-commands,
-        #frame-sep {
-          display: none !important;
-        }
+                #fullscreen-warning,
+                .titlebar-buttonbox-container,
+                #statuspanel,
+                #vertical-spacer,
+                #context-back,
+                #context-forward,
+                #context-reload,
+                #context-stop,
+                #context-sendimage,
+                #context-setDesktopBackground,
+                #context-bookmarkpage,
+                #context-savepage,
+                #context-selectall,
+                #context-viewsource,
+                #context-inspect-a11y,
+                #context-inspect,
+                #context-media-eme-separator,
+                #context-sep-navigation,
+                #context-sep-viewsource-commands,
+                #context-sep-open,
+                #context-sep-sendlinktodevice,
+                #context-sep-copylink,
+                #context-sep-setbackground,
+                #context-sep-sharing,
+                #context-sep-highlights,
+                #context-sep-redo,
+                #context-sep-selectall,
+                #context-sep-pdfjs-redo,
+                #context-sep-pdfjs-selectall,
+                #context-sep-screenshots,
+                #context-sep-frame-screenshot,
+                #context-sep-bidi,
+                #context-media-sep-video-commands,
+                #context-media-sep-commands,
+                #frame-sep {
+                  display: none !important;
+                }
 
-        .titlebar-spacer[type="pre-tabs"] {
-          width: 2px !important;
-	  display: flex !important;
-        }
+                .titlebar-spacer[type="pre-tabs"] {
+                  width: 2px !important;
+        	  display: flex !important;
+                }
 
-        .urlbar-input-box {
-          margin-left: 5px;
-        }
+                .urlbar-input-box {
+                  margin-left: 5px;
+                }
 
-        #urlbar:not([hover]) #page-action-buttons,
-        #urlbar:not([hover]) #tracking-protection-icon-container,
-        #urlbar:not([hover]) #identity-box {
-          transition: opacity 2s linear 2s, visibility 2s linear 0s;
-          visibility: collapse;
-          opacity: 0%;
-        }
+                #urlbar:not([hover]) #page-action-buttons,
+                #urlbar:not([hover]) #tracking-protection-icon-container,
+                #urlbar:not([hover]) #identity-box {
+                  transition: opacity 2s linear 2s, visibility 2s linear 0s;
+                  visibility: collapse;
+                  opacity: 0%;
+                }
 
-        #urlbar:hover #page-action-buttons,
-        #urlbar:hover #tracking-protection-icon-container,
-        #urlbar:hover #identity-box {
-          transition: opacity .5s linear .5s, visibility .5s linear 0s;
-          visibility: visible;
-          opacity: 100%;
-        }
+                #urlbar:hover #page-action-buttons,
+                #urlbar:hover #tracking-protection-icon-container,
+                #urlbar:hover #identity-box {
+                  transition: opacity .5s linear .5s, visibility .5s linear 0s;
+                  visibility: visible;
+                  opacity: 100%;
+                }
       '';
       userContent = "";
     };
   };
 }
-

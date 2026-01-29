@@ -1,4 +1,6 @@
-{ additionalBookmarks ? [] }:
+{
+  additionalBookmarks ? [ ],
+}:
 [
   {
     name = "Videos";
@@ -110,4 +112,3 @@
   }
 ]
 ++ additionalBookmarks
-
