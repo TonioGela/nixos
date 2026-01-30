@@ -72,6 +72,10 @@ overview {
  }
 }
 
+recent-windows {
+  off
+}
+
 layout {
     gaps 8
     center-focused-column "never"

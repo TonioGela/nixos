@@ -124,7 +124,7 @@ nixos {
       settings = {
         switch = false;
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd 'niri-session' --asterisks --theme 'border=red;time=green;title=green;prompt=green;button=black;action=black'";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd 'niri-session' --asterisks --user-menu --theme 'border=red;time=green;title=green;prompt=green;button=black;action=black'";
           user = "toniogela";
         };
       };
@@ -202,15 +202,16 @@ nixos {
 
     environment.systemPackages = with pkgs; [
       git
+      bat
       eza
       nh
-      swaylock-effects
       swaybg
       nixd
       nixfmt
       nixfmt-tree
       npins
       neovim
+      mpv
       comma
       bluetui
       brightnessctl
