@@ -14,17 +14,78 @@ in
 nixos {
   configuration = {
     imports = [
-      # Include the results of the hardware scan.
       fw13-hardware
       ./hardware-configuration.nix
       homeManager
       diskoModule
     ];
 
-    services.udev.packages = [ pkgs.game-devices-udev-rules ];
-    services.udev.extraRules = ''
-      	     KERNEL=="event*", SUBSYSTEM=="input", MODE="0660", GROUP="input"
-      	   '';
+    nixpkgs.config.allowUnfree = true; # Apparently the bt firmware is not free
+
+    nix = {
+      channel.enable = false;
+      settings.experimental-features = [ "nix-command" ];
+      nixPath = [
+        "nixpkgs=/etc/nixos/nixpkgs"
+        "nixos-config=/etc/nixos/configuration.nix"
+      ];
+    };
+
+    environment = {
+      etc."nixos/nixpkgs".source = builtins.storePath pkgs.path;
+      variables."NH_FILE" = "/etc/nixos/configuration.nix";
+    };
+
+    boot = {
+      consoleLogLevel = 0;
+      kernelParams = [ "console=tty2" ];
+      loader = {
+        efi.canTouchEfiVariables = true;
+        systemd-boot = {
+          enable = true;
+          consoleMode = "5";
+          configurationLimit = 10;
+        };
+      };
+    };
+
+    networking = {
+      networkmanager.enable = true;
+      hostName = "toniogela-nixos-fw13"; # Define your hostname.
+    };
+
+    hardware.bluetooth.enable = true;
+    hardware.graphics.enable = true;
+    hardware.graphics.enable32Bit = true;
+    hardware.enableAllFirmware = true;
+
+    security.rtkit.enable = true;
+
+    time.timeZone = "Europe/Rome";
+
+    fonts.packages = [ pkgs.nerd-fonts.sauce-code-pro ];
+
+    i18n = {
+      defaultLocale = "en_GB.UTF-8";
+      extraLocales = [ "it_IT.UTF-8/UTF-8" ];
+    };
+
+    # console = {
+    #   font = "Lat2-Terminus16";
+    #   keyMap = "us";
+    #   useXkbConfig = true; # use xkb.options in tty.
+    # };
+
+    users.defaultUserShell = pkgs.zsh;
+    users.users.toniogela = {
+      isNormalUser = true;
+      extraGroups = [
+        "wheel"
+        "gamemode"
+        "lpadmin"
+        "input"
+      ];
+    };
 
     home-manager.useGlobalPkgs = true;
     home-manager.useUserPackages = true;
@@ -51,53 +112,42 @@ nixos {
         home.stateVersion = "25.11";
       };
 
-    nix = {
-      channel.enable = false;
-      settings.experimental-features = [ "nix-command" ];
-      nixPath = [
-        "nixpkgs=/etc/nixos/nixpkgs"
-        "nixos-config=/etc/nixos/configuration.nix"
-      ];
-    };
+    environment.systemPackages = with pkgs; [
+      git
+      bat
+      eza
+      nh
+      swaybg
+      nixd
+      nixfmt
+      nixfmt-tree
+      npins
+      neovim
+      mpv
+      comma
+      bluetui
+      brightnessctl
+      playerctl
+      framework-tool-tui
+      kitty
+      pavucontrol
+      fuzzel
+      yazi
+      gh
+      ripgrep
+      xwayland-satellite
+      (retroarch.withCores (
+        cores: with cores; [
+          mgba
+          play
+        ]
+      ))
+    ];
 
-    environment = {
-      etc."nixos/nixpkgs".source = builtins.storePath pkgs.path;
-      variables."NH_FILE" = "/etc/nixos/configuration.nix";
-      shellAliases = {
-        ls = "${pkgs.eza}/bin/eza -la --icons --git --group-directories-first --color=auto --git-ignore";
-      };
-    };
-
-    boot.loader.systemd-boot = {
-      enable = true;
-      consoleMode = "5";
-      configurationLimit = 10;
-    };
-
-    boot.loader.efi.canTouchEfiVariables = true;
-    boot.kernelParams = [ "console=tty2" ];
-    boot.consoleLogLevel = 0;
-
-    networking.hostName = "toniogela-nixos-fw13"; # Define your hostname.
-
-    networking.networkmanager.enable = true;
-
-    time.timeZone = "Europe/Rome";
-
-    fonts.packages = [ pkgs.nerd-fonts.sauce-code-pro ];
-
-    i18n = {
-      defaultLocale = "en_GB.UTF-8";
-      extraLocales = [
-        "it_IT.UTF-8/UTF-8"
-      ];
-    };
-
-    # console = {
-    #   font = "Lat2-Terminus16";
-    #   keyMap = "us";
-    #   useXkbConfig = true; # use xkb.options in tty.
-    # };
+    services.udev.packages = [ pkgs.game-devices-udev-rules ];
+    services.udev.extraRules = ''
+      KERNEL=="event*", SUBSYSTEM=="input", MODE="0660", GROUP="input"
+    '';
 
     services.fwupd.enable = true;
     services.fprintd.enable = true;
@@ -145,10 +195,7 @@ nixos {
       ];
     };
 
-    hardware.bluetooth.enable = true;
-
     services.pulseaudio.enable = false;
-    security.rtkit.enable = true;
     services.pipewire = {
       enable = true;
       alsa.enable = true;
@@ -163,31 +210,18 @@ nixos {
       };
     };
 
-    users.defaultUserShell = pkgs.zsh;
     programs.zsh.enable = true;
     programs.zoxide.enable = true;
-
-    users.users.toniogela = {
-      isNormalUser = true;
-      extraGroups = [
-        "wheel"
-        "gamemode"
-        "lpadmin"
-        "input"
-      ];
-    };
 
     programs.niri.enable = true;
     programs.waybar.enable = false;
     programs.firefox.enable = false;
 
-    nixpkgs.config.allowUnfree = true;
     programs.steam.enable = true;
     programs.gamescope.enable = true;
     programs.gamemode = {
       enable = true;
       enableRenice = true;
-
       settings = {
         general = {
           renice = 10;
@@ -195,54 +229,11 @@ nixos {
       };
     };
 
-    hardware.graphics.enable = true;
-    hardware.graphics.enable32Bit = true;
-
-    hardware.enableAllFirmware = true;
-
-    environment.systemPackages = with pkgs; [
-      git
-      bat
-      eza
-      nh
-      swaybg
-      nixd
-      nixfmt
-      nixfmt-tree
-      npins
-      neovim
-      mpv
-      comma
-      bluetui
-      brightnessctl
-      playerctl
-      framework-tool-tui
-      kitty
-      pavucontrol
-      fuzzel
-      yazi
-      gh
-      ripgrep
-      xwayland-satellite
-      (retroarch.withCores (
-        cores: with cores; [
-          mgba
-          play
-        ]
-      ))
-    ];
-
     # programs.mtr.enable = true;
     # programs.gnupg.agent = {
     #   enable = true;
     #   enableSSHSupport = true;
     # };
-
-    # Open ports in the firewall.
-    # networking.firewall.allowedTCPPorts = [ ... ];
-    # networking.firewall.allowedUDPPorts = [ ... ];
-    # Or disable the firewall altogether.
-    # networking.firewall.enable = false;
 
     system.copySystemConfiguration = true;
 
