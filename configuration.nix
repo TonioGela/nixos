@@ -36,16 +36,35 @@ nixos {
       variables."NH_FILE" = "/etc/nixos/configuration.nix";
     };
 
+    systemd.settings.Manager.RebootWatchdogSec = "0";
     boot = {
       consoleLogLevel = 0;
-      kernelParams = [ "console=tty2" ];
+      kernelParams = [
+        "splash"
+        "quiet"
+        "loglevel=3"
+        "systemd.show_status=false"
+        "rd.udev.log_level=3"
+        "udev.log_level=3"
+        "udev.log_priority=3"
+        "vt.global_cursor_default=0"
+      ];
+      initrd = {
+        verbose = false;
+        systemd.enable = true;
+      };
       loader = {
         efi.canTouchEfiVariables = true;
         systemd-boot = {
           enable = true;
+          editor = false;
           consoleMode = "5";
           configurationLimit = 10;
         };
+      };
+      plymouth = {
+        enable = true;
+        theme = "breeze"; # "breeze"
       };
     };
 
@@ -135,6 +154,7 @@ nixos {
       yazi
       gh
       ripgrep
+      qbittorrent
       xwayland-satellite
       (retroarch.withCores (
         cores: with cores; [
@@ -174,7 +194,7 @@ nixos {
       settings = {
         switch = false;
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd 'niri-session' --asterisks --user-menu --theme 'border=red;time=green;title=green;prompt=green;button=black;action=black'";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd 'niri-session &> /dev/null' --asterisks --user-menu --theme 'border=red;time=green;title=green;prompt=green;button=black;action=black'";
           user = "toniogela";
         };
       };
