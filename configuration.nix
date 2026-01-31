@@ -36,23 +36,26 @@ nixos {
       variables."NH_FILE" = "/etc/nixos/configuration.nix";
     };
 
-    systemd.settings.Manager.RebootWatchdogSec = "0";
     boot = {
       consoleLogLevel = 0;
       kernelParams = [
-        "splash"
         "quiet"
+        "splash"
+        "nowatchdog"
         "loglevel=3"
         "systemd.show_status=false"
-        "rd.udev.log_level=3"
+        "rd.systemd.show_status=false"
         "udev.log_level=3"
+        "rd.udev.log_level=3"
         "udev.log_priority=3"
         "vt.global_cursor_default=0"
+        "video=2880x1920@120"
       ];
       initrd = {
         verbose = false;
         systemd.enable = true;
       };
+      extraModprobeConfig = "options ucsi_acpi debug=0";
       loader = {
         efi.canTouchEfiVariables = true;
         systemd-boot = {
@@ -194,7 +197,7 @@ nixos {
       settings = {
         switch = false;
         default_session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd 'niri-session &> /dev/null' --asterisks --user-menu --theme 'border=red;time=green;title=green;prompt=green;button=black;action=black'";
+          command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd 'niri-session &> /dev/null' --asterisks --remember --theme 'border=red;time=green;title=green;prompt=green;button=black;action=black'";
           user = "toniogela";
         };
       };

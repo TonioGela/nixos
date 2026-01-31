@@ -160,6 +160,7 @@ in
       mv = "mv -i";
       rm = "rm -i";
       flushdns = "sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder";
+      off = "niri msg action quit && systemctl poweroff";
     };
 
     shellGlobalAliases = { };
