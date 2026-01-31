@@ -45,11 +45,6 @@ let
     [[ ${absoluteDotDir}/zoxide_init.zwc -nt ${absoluteDotDir}/zoxide_init ]] || zcompile -M ${absoluteDotDir}/zoxide_init ${absoluteDotDir}/zoxide_init.zwc
     autoload -Uz zoxide_init && zoxide_init'';
 
-  # TODO missing:
-  # function hodoku() {
-  #   java -jar ~/.opt/hodoku.jar &>/dev/null &|
-  # }
-
   custom_functions = ''
     function zat() {
       command zathura $@ &>/dev/null &|
@@ -202,7 +197,6 @@ in
       FZF_DEFAULT_OPTS = "--style minimal --border --reverse --highlight-line --margin=1,25%  --height=20%";
       NO_TEST_LOGS = "1";
       JAVA_OPTS = "-Xmx10G";
-      TF_TOKEN_gitlab_com = "$(${lib.getExe pkgs.yq} --exit-status --raw-output '.hosts[\"gitlab.com\"].token' ~/.config/glab-cli/config.yml)";
     };
 
     initContent = lib.mkMerge [
